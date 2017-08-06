@@ -48,7 +48,10 @@ def souhu_page_index(text):
             authorIds = i['authorId']
             page_url ='http://www.sohu.com/a/'+ str(ids)+'_'+str(authorIds)
             print page_url
-            yield page_url
+            if db[MONGO_TABLE].find_one({'pub_url':pub_url}):  #url去重，如果存在，提示爬过，否则else。
+                print '这url爬过'
+            else:
+                yield pub_url
     except:
         pass
 
